@@ -16,7 +16,7 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/index.html', // Path to your HTML template
+        template: 'index.html', // Path to your HTML template
         filename: 'index.html', // Output HTML filename
         chunks: ['main'], // Entry chunks to include in this HTML file
       }),
@@ -33,7 +33,7 @@ module.exports = () => {
         start_url: '/',
         icons: [
           {
-            src: path.resolve('src/img/icon.png'),
+            src: 'src/images/logo.png',
             sizes: [96, 128, 192, 256, 384, 512],
           },
         ],
