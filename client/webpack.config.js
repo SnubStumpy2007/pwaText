@@ -1,14 +1,9 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
-const path = require('path');
-const { InjectManifest } = require('workbox-webpack-plugin');
-
 module.exports = () => {
   return {
     mode: 'development',
     entry: {
-      main: './src/js/index.js',
-      install: './src/js/install.js',
+      main: './client/dist/js/index.js', // Update the path to the entry point in the "dist" directory
+      install: './client/dist/js/install.bundle.js', // Update the path to the "install" file in the "dist" directory
     },
     output: {
       filename: '[name].bundle.js',
@@ -16,12 +11,12 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: 'index.html', // Path to your HTML template
+        template: './client/src/index.html', // Update the path to your HTML template
         filename: 'index.html', // Output HTML filename
         chunks: ['main'], // Entry chunks to include in this HTML file
       }),
       new InjectManifest({
-        swSrc: './src-sw.js',
+        swSrc: './client/src-sw.js', // Update the path to your service worker source
         swDest: 'src-sw.js',
       }),
       new WebpackPwaManifest({
@@ -33,7 +28,7 @@ module.exports = () => {
         start_url: '/',
         icons: [
           {
-            src: 'src/images/logo.png',
+            src: './client/src/images/logo.png', // Update the path to your image
             sizes: [96, 128, 192, 256, 384, 512],
           },
         ],
