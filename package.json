@@ -1,9 +1,13 @@
 {
   "name": "jate",
   "scripts": {
-    "dev": "cd client && npm run dev",
+    "dev": "webpack-dev-server",
+    "start:dev": "concurrently \"cd server && npm run server\" \"cd client && npm run dev\"",
+    "start": "npm run build && cd server && node server.js",
+    "server": "cd server nodemon server.js --ignore client",
     "build": "cd client && npm run build",
-    "start": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "client": "cd client && npm start",
     "heroku-postbuild": "cd client && npm run build"
   },
   "author": "2U",
