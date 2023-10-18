@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "cd client && npm run dev",
     "build": "cd client && npm run build",
-    "start": "cd client && npm run start",
+    "start": "node server/server.js",
     "heroku-postbuild": "cd client && npm run build"
   },
   "author": "2U",
