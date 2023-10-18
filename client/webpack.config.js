@@ -1,52 +1,72 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const path = require('path');
+const { InjectManifest } = require('workbox-webpack-plugin');
+
+
 module.exports = () => {
   return {
     mode: 'development',
     entry: {
-      main: './client/dist/js/index.js', // Update the path to the entry point in the "dist" directory
-      install: './client/dist/js/install.bundle.js', // Update the path to the "install" file in the "dist" directory
+      main: './src/js/index.js',
+      install: './src/js/install.js',
+      database: './src/js/database.js',
+      editor: './src/js/editor.js',
+      header: './src/js/header.js',
     },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
+      // Webpack plugin that generates our html file and injects our bundles
       new HtmlWebpackPlugin({
-        template: './client/src/index.html', // Update the path to your HTML template
-        filename: 'index.html', // Output HTML filename
-        chunks: ['main'], // Entry chunks to include in this HTML file
+        template: './index.html',
+        title: 'JATE'
       }),
+      // Injects our custom servie worker
       new InjectManifest({
-        swSrc: './client/src-sw.js', // Update the path to your service worker source
+        swSrc: './src-sw.js',
         swDest: 'src-sw.js',
       }),
+      // Creates a manifest.json file.
       new WebpackPwaManifest({
-        name: 'Your PWA Text Editor',
-        short_name: 'Text Editor',
-        description: 'A progressive web app for text editing.',
-        background_color: '#ffffff',
-        theme_color: '#000000',
+        fingerprints: false,
+        inject: true,
+        name: 'Just Another Text Editor',
+        short_name: 'JATE',
+        description: 'Just another text editor',
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
         start_url: '/',
+        publicPath: '/',
         icons: [
           {
-            src: './client/src/images/logo.png', // Update the path to your image
+            src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
           },
         ],
       }),
+
     ],
+
     module: {
+      // CSS Loaders
       rules: [
         {
-          test: /\.css$/,
+          test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.js$/,
+          test: /\.m?js$/,
           exclude: /node_modules/,
+          // We use babel-loader in order to use ES6.
           use: {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
         },
