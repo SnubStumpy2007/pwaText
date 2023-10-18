@@ -1,9 +1,9 @@
 {
-  "name": "JATE",
+  "name": "jate",
   "scripts": {
     "dev": "cd client && npm run dev",
     "build": "cd client && npm run build",
-    "start": "node server/server.js",
+    "start": "cd client && npm run start",
     "heroku-postbuild": "cd client && npm run build"
   },
   "author": "2U",
